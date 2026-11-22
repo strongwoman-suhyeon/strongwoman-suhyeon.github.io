@@ -98,6 +98,17 @@ svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-wi
 .amount .extra::before{content:'';flex:0 0 100%;border-top:1px dashed var(--line);margin-bottom:8px}
 .amount .extra em{font-style:normal;font-size:12.5px;color:var(--gold);background:var(--gold-bg);border-radius:999px;padding:2px 10px;white-space:nowrap}
 .amount .extra strong{color:var(--ink);font-weight:700;white-space:nowrap}
+.watch{margin-top:14px;border:1px solid #ddd3ec;background:var(--purple-bg);border-radius:12px;padding:16px 15px}
+.watch h4{margin:0;font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.45}
+.watch-lead{margin:4px 0 0;font-size:13.5px;line-height:1.65;color:var(--muted)}
+.watch-grid{display:grid;gap:8px;margin:12px 0}
+.watch-grid div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.watch-grid b{display:inline-block;font-size:13px;color:var(--olive);background:var(--purple-bg);border-radius:999px;padding:2px 11px;margin-bottom:6px}
+.watch-grid p{margin:0;font-size:15.5px;font-weight:700;line-height:1.5;color:var(--ink)}
+.watch-grid small{display:block;font-weight:500;font-size:13px;line-height:1.6;color:var(--muted);margin-top:3px}
+.watch-more{margin:0;font-size:13.5px;line-height:1.7;color:var(--ink)}
+.watch-cta{margin:8px 0 0;font-size:13.5px;line-height:1.65;color:var(--olive);font-weight:700}
+@media (min-width:720px){.watch{padding:20px}.watch-grid{grid-template-columns:1fr 1fr}}
 .callout{display:flex;gap:11px;align-items:flex-start;background:var(--gold-bg);border-radius:12px;padding:13px 15px;font-size:13.5px;line-height:1.65;color:#5c4a22;margin-top:14px}
 .callout svg{width:20px;height:20px;color:var(--gold);margin-top:2px}
 .callout b{color:#4a3a15}
