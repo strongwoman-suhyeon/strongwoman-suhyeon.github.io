@@ -1,0 +1,58 @@
+name: 홈페이지 배포
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 21 * * *'   # 매일 06:00 (한국 시간)
+    - cron: '0 11 * * *'   # 매일 20:00 (한국 시간)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: 블로그 새 글 가져오기
+        run: node scripts/sync-blog.mjs
+
+      - name: 바뀐 글 목록 저장
+        run: |
+          if ! git diff --quiet -- data/blog.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/blog.json
+            git commit -m "블로그 글 목록 자동 갱신"
+            git push
+          fi
+
+      - name: 배포할 파일 모으기
+        run: |
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'scripts' --exclude '_site' --exclude 'README.md' ./ _site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
