@@ -118,3 +118,5 @@ a.today-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(
 }
 .post .ph.noimg .ph-word{display:flex}
 #main:focus{outline:none}
+.t-book .book-line{font:500 22px/1.65 var(--serif);letter-spacing:-.035em;color:#3a2d52}
+.t-book .book-src{font-size:15px;color:#6a4894;font-weight:600}

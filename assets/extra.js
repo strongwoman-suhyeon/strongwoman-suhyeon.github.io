@@ -132,6 +132,21 @@
     }
   }
 
+  /* 오늘의 책 한 줄 (전자책 서재 3줄 루틴에서 대표님이 확인한 카드만 data/today-book.json에 올림) */
+  const todayKey = kstNow.getUTCFullYear() + '-' + String(kstNow.getUTCMonth() + 1).padStart(2, '0') + '-' + String(kstNow.getUTCDate()).padStart(2, '0');
+  function renderTodayBook(data) {
+    const bEl = $('#today-book');
+    if (!bEl || !data || !Array.isArray(data.items)) return;
+    const it = data.items.find((x) => x.date === todayKey && x.text);
+    if (!it) return;
+    bEl.href = it.link || '#library';
+    if (it.link && /^https?:/.test(it.link)) { bEl.target = '_blank'; } else { bEl.removeAttribute('target'); }
+    bEl.innerHTML = '<span class="label"><i>' + esc(it.label || '오늘의 책 한 줄') + '</i>' + (it.theme ? esc(it.theme) : '') + '</span>' +
+      '<p class="book-line">' + String(it.text).split(/\n/).map(esc).join('<br>') + '</p>' +
+      (it.book ? '<p class="book-src">' + esc(it.book) + '</p>' : '') +
+      '<span class="go">' + (it.link ? '이어 읽기 ' + (/^https?:/.test(it.link) ? '↗' : '→') : '북인사이트 둘러보기 →') + '</span>';
+  }
+
   /* 시리즈 진행 */
   function renderSeries(posts) {
     const hs = $('#health-series');
@@ -214,6 +229,7 @@
     renderSeries(posts);
     setupArchive('health', posts.filter(isHealth), '검색어와 맞는 건강테크 글이 없어요.');
     setupArchive('library', posts.filter(isBook), '검색어와 맞는 독서 기록이 없어요.');
+    return fetch('data/today-book.json' + bust).then((r) => r.json()).then(renderTodayBook).catch(() => {});
   }).catch(() => {
     renderToday([]);
     document.querySelectorAll('.today-card .skeleton').forEach((s) => s.remove());

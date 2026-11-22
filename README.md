@@ -7,3 +7,5 @@
 - 묻고 답하기 답변: data/qna.json 에 항목을 추가하면 바로 반영
 - 오늘의 생각창고: assets/extra.js 가 날짜에 맞춰 건강테크·북인사이트·오늘의 질문을 자동으로 바꿔 보여 줌
 - 배포: main 브랜치에 올리면 GitHub Pages로 자동 배포 (.github/workflows/deploy.yml)
+- 오늘의 책 한 줄: data/today-book.json 에 대표님이 확인한 카드(날짜별)를 추가하면 그날 '오늘의 북인사이트' 카드에 표시. 없으면 블로그 독서 글을 보여 줌
+- 도메인: strongwoman.kr (가비아 DNS: A 185.199.108~111.153, www CNAME strongwoman-suhyeon.github.io, 구글 인증 TXT 유지)
