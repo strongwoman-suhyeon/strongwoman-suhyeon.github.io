@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>관리자 | 스트롱우먼 박수현</title>
+<link rel="icon" href="/card/assets/icon.svg">
+<style>
+@font-face{font-family:'GmarketSans';font-weight:500;font-display:swap;src:url('/card/assets/GmarketSans-Medium.woff') format('woff')}
+@font-face{font-family:'GmarketSans';font-weight:700;font-display:swap;src:url('/card/assets/GmarketSans-Bold.woff') format('woff')}
+:root{
+  --paper:#F5F0E6; --card:#FFFDF9; --ink:#2B2A26; --sub:#6B665B; --line:#E8E0D0;
+  --green:#2F6B55; --green-t:#E3F0E8; --green-d:#234F3F;
+  --terra:#C7603A; --terra-t:#FBE9DF;
+  --mustard:#B9851F; --mustard-t:#FBF1D6;
+  --sky:#3A6FA3; --sky-t:#E3EEF8;
+  --plum:#765595; --plum-t:#EFE8F6;
+  --rose:#B9506A; --rose-t:#FBE6EA;
+  --teal:#2B7C86; --teal-t:#E0F1F2;
+  --brown:#6F5B3E; --brown-t:#F1EADB;
+  --r:20px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:'GmarketSans','Malgun Gothic','Apple SD Gothic Neo',sans-serif;font-weight:500;color:var(--ink);line-height:1.65;
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .25 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+
+#lock{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px 16px}
+.lk{width:100%;max-width:440px;background:var(--card);border-radius:24px;padding:40px 32px 32px;border-top:6px solid var(--green);
+  box-shadow:0 2px 0 rgba(120,100,60,.05),0 18px 44px rgba(90,75,45,.12);text-align:center}
+.lk .mark{width:64px;height:64px;border-radius:20px;background:linear-gradient(145deg,#3C8266,#234F3F);display:grid;place-items:center;margin:0 auto 20px;box-shadow:0 6px 16px rgba(47,107,85,.28)}
+.lk .mark svg{width:36px;height:36px}
+.lk h1{margin:0;font-size:26px;letter-spacing:-.5px;line-height:1.3}
+.lk p{margin:8px 0 28px;color:var(--sub);font-size:15px}
+.lk label.f{display:block;text-align:left;font-size:14px;color:var(--sub);margin-bottom:8px}
+.lk input[type=password]{width:100%;height:56px;border:2px solid var(--line);border-radius:14px;padding:0 16px;font-size:18px;background:#fff;outline:none;letter-spacing:1px}
+.lk input[type=password]:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(47,107,85,.12)}
+.lk .rem{display:flex;gap:10px;align-items:flex-start;text-align:left;margin:16px 0 24px;font-size:14px;color:var(--sub);line-height:1.5;cursor:pointer}
+.lk .rem input{width:20px;height:20px;accent-color:var(--green);flex:none;margin-top:1px}
+.lk .rem b{color:var(--ink);display:block;font-size:15px}
+.lk button{width:100%;height:56px;border:0;border-radius:14px;background:var(--green);color:#fff;font-weight:700;font-size:18px;cursor:pointer;transition:background .15s}
+.lk button:hover{background:var(--green-d)}
+.lk button:disabled{opacity:.6;cursor:wait}
+#msg{min-height:24px;margin-top:14px;font-size:15px;color:var(--terra)}
+#msg.ok{color:var(--green-d)}
+.lk .back{display:inline-block;margin-top:16px;font-size:14px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:480px){.lk{padding:32px 20px 24px}}
+</style>
+</head>
+<body>
+<div id="lock">
+  <form class="lk" id="lf" autocomplete="on">
+    <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M26 5C14 5 6 11 6 20c0 2 .5 3.6 1.3 5C9 17 14 12.5 21 10c-5.5 3.6-9.6 8.6-11.6 16.4 1.5 1 3.4 1.6 5.6 1.6 8 0 12-8 11-23Z" fill="#F7F2E6"/></svg></div>
+    <h1>관리자 화면</h1>
+    <p>스트롱우먼 박수현 대표님만 들어오는 곳이에요.</p>
+    <input type="text" name="username" value="관리자" autocomplete="username" hidden>
+    <label class="f" for="pw">비밀번호</label>
+    <input type="password" id="pw" name="password" autocomplete="current-password" placeholder="비밀번호를 적어 주세요" required>
+    <label class="rem"><input type="checkbox" id="rem"><span><b>이 기기에서 계속 열어 두기</b>내 PC, 내 휴대폰에서만 켜 주세요.</span></label>
+    <button type="submit" id="go">들어가기</button>
+    <div id="msg" role="status"></div>
+    <a class="back" href="/">← 홈페이지로 돌아가기</a>
+  </form>
+</div>
+<div id="app" hidden></div>
+<script>
+(function(){
+  const LS = 'sw_admin_mk';
+  const $ = s => document.querySelector(s);
+  const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const b64e = u => btoa(String.fromCharCode.apply(null, u));
+  const toUrl = s => s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const fromUrl = s => { s = s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length % 4) s += '='; return s; };
+  let keys = null, mk = null, mkRaw = null;
+  const msg = (t, ok) => { const m = $('#msg'); if(m){ m.textContent = t; m.className = ok ? 'ok' : ''; } };
+
+  async function dec(key, buf){ const u = new Uint8Array(buf); return crypto.subtle.decrypt({name:'AES-GCM', iv:u.subarray(0,12)}, key, u.subarray(12)); }
+  async function getFile(id){ const r = await fetch('d/'+id+'.bin'); if(!r.ok) throw new Error('파일을 찾지 못했어요 ('+r.status+')'); return dec(mk, await r.arrayBuffer()); }
+  async function loadKeys(){ if(keys) return keys; const r = await fetch('keys.json', {cache:'no-store'}); if(!r.ok) throw new Error('keys'); keys = await r.json(); return keys; }
+  function normalize(pw){ let p = pw.trim().toLowerCase().replace(/\s+/g,''); const bare = p.replace(/-/g,''); if(/^[a-z0-9]{16}$/.test(bare)) p = bare.match(/.{4}/g).join('-'); return p; }
+  async function rawFromPassword(pw){
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+    const kek = await crypto.subtle.deriveKey({name:'PBKDF2', hash:'SHA-256', salt:b64d(keys.salt), iterations:keys.iter}, base, {name:'AES-GCM', length:256}, false, ['decrypt']);
+    return new Uint8Array(await dec(kek, b64d(keys.wrap).buffer));
+  }
+  function lock(){ try{ sessionStorage.removeItem(LS); localStorage.removeItem(LS); }catch(e){} location.replace(location.pathname); }
+  async function start(raw, remember){
+    await loadKeys();
+    mkRaw = raw; mk = await crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']);
+    const bundle = JSON.parse(new TextDecoder().decode(await getFile(keys.app)));
+    try{ sessionStorage.setItem(LS, b64e(raw)); if(remember) localStorage.setItem(LS, b64e(raw)); }catch(e){}
+    const st = document.createElement('style'); st.textContent = bundle.css; document.head.appendChild(st);
+    $('#lock').remove(); const app = $('#app'); app.innerHTML = bundle.html; app.hidden = false;
+    new Function('ADMIN', bundle.js)({ bundle, getFile, lock,
+      remembered: () => { try{ return !!localStorage.getItem(LS); }catch(e){ return false; } },
+      phoneLink: () => location.origin + location.pathname + '#k=' + toUrl(b64e(mkRaw)) });
+  }
+
+  $('#lf').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = $('#go'); btn.disabled = true; msg('확인하고 있어요…', true);
+    try{
+      await loadKeys();
+      let raw;
+      try{ raw = await rawFromPassword(normalize($('#pw').value)); }
+      catch(err){ raw = await rawFromPassword($('#pw').value); }
+      await start(raw, $('#rem').checked);
+    }catch(err){
+      btn.disabled = false;
+      msg(err && err.message === 'keys' ? '연결이 불안정해요. 잠시 뒤 다시 눌러 주세요.' : '비밀번호가 맞지 않아요. 다시 확인해 주세요.');
+      $('#pw').select();
+    }
+  });
+
+  (async function auto(){
+    if(!(window.crypto && crypto.subtle)){ msg('이 브라우저에서는 열 수 없어요. 크롬이나 사파리 최신판으로 열어 주세요.'); return; }
+    let saved = null, remember = false;
+    const m = location.hash.match(/^#k=([A-Za-z0-9_-]+)$/);
+    try{
+      if(m){ saved = fromUrl(m[1]); remember = true; history.replaceState(null, '', location.pathname); }
+      else saved = sessionStorage.getItem(LS) || localStorage.getItem(LS);
+    }catch(e){}
+    if(!saved){ $('#pw').focus(); return; }
+    $('#go').disabled = true; msg('여는 중이에요…', true);
+    try{ await start(b64d(saved), remember); }
+    catch(e){ try{ sessionStorage.removeItem(LS); localStorage.removeItem(LS); }catch(_){}
+      if($('#go')){ $('#go').disabled = false; msg(m ? '링크가 더 이상 맞지 않아요. 비밀번호로 들어와 주세요.' : ''); $('#pw').focus(); } }
+  })();
+})();
+</script>
+</body>
+</html>
