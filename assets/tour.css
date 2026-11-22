@@ -1,0 +1,56 @@
+/* 생각창고 안으로: 3D 실내 둘러보기 (2026-11-23) */
+#tour,#dawn-room{scroll-margin-top:0}
+.page-banner img{height:auto}
+.scene-tools{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.tour-enter{display:inline-flex;align-items:center;gap:8px;padding:8px 17px;border-radius:30px;background:#2d3e5c;color:#fff;font-size:14px;font-weight:700;line-height:1.5;transition:transform .2s,background .2s}
+.tour-enter:hover{background:#7551a0;transform:translateY(-2px)}
+.tour-figure{margin:0}
+.tour-map{border-radius:13px;border:1px solid #e4dac9;background:#eee1cc;overflow:hidden}
+.tour-canvas{position:relative}
+.tour-canvas img{display:block;width:100%;height:auto}
+.tour-pin{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:8px;padding:6px 15px 6px 6px;border-radius:30px;background:rgba(255,255,255,.96);color:var(--pin);font-size:15px;font-weight:700;line-height:1.5;white-space:nowrap;box-shadow:0 4px 14px rgba(38,52,76,.24);transition:transform .2s,background .2s,color .2s}
+.tour-pin i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--pin);color:#fff;display:grid;place-items:center;font-size:14px;position:relative;flex-shrink:0}
+.tour-pin i::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--pin);animation:tour-pulse 2.4s ease-out infinite}
+@keyframes tour-pulse{0%{transform:scale(.8);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+.tour-pin:hover,.tour-pin:focus-visible,.tour-pin.is-hot{background:var(--pin);color:#fff;transform:translate(-50%,-50%) scale(1.05)}
+.tour-pin:hover i,.tour-pin:focus-visible i,.tour-pin.is-hot i{background:#fff;color:var(--pin)}
+.pin-care{--pin:#365c9d}.pin-book{--pin:#7551a0}.pin-dawn{--pin:#a0661a}.pin-cafe{--pin:#b85447}
+.tour-hint{display:none}
+.tour-figure figcaption{font-size:13px;color:#868086;margin:12px 1px 0;line-height:1.6}
+.tour-rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+.tour-rooms .entry-top{height:auto;aspect-ratio:4/3;background:#f1e8dc}
+.room-no{position:absolute;left:12px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--room);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.tour-rooms .entry.room .tiny,.tour-rooms .entry.room .go{color:var(--room)}
+.room-care{--room:#365c9d}.room-book{--room:#7551a0}.room-dawn{--room:#a0661a}.room-cafe{--room:#b85447}
+.tour-rooms .entry h3{font-size:21px}
+.tour-rooms .entry p{font-size:15px}
+.tour-rooms .entry.is-hot{transform:translateY(-4px);border-color:var(--room);box-shadow:0 8px 22px rgba(38,52,76,.12)}
+.page-banner figcaption,.room-figure figcaption{font-size:13px;color:#868086;margin:9px 1px 0;line-height:1.6}
+.page-banner figcaption b,.room-figure figcaption b{color:#4b4652;font-weight:700}
+.room-figure{margin:26px 0 0}
+.room-figure img{width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;object-position:60% 55%;border-radius:12px;display:block;border:1px solid #e5e3e9}
+@media(min-width:721px){.tour-rooms .entry{display:flex;flex-direction:column}
+.tour-rooms .entry-body{flex:1;display:flex;flex-direction:column}
+.tour-rooms .entry .go{margin-top:auto;padding-top:14px}}
+@media(max-width:1000px){.tour-rooms{grid-template-columns:repeat(2,1fr);gap:16px}
+.tour-pin{font-size:13px;padding:4px 12px 4px 4px;gap:6px}
+.tour-pin i{width:24px;height:24px;font-size:13px}}
+@media(max-width:720px){.scene-tools{gap:12px;width:100%;justify-content:space-between}
+.tour-enter{font-size:14px;padding:9px 16px}
+.tour-map{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:7px;scrollbar-width:none}
+.tour-map::-webkit-scrollbar{display:none}
+.tour-canvas{width:700px}
+.tour-hint{display:block;text-align:center;font-size:13px;color:#8c638d;margin:10px 0 0}
+.tour-figure figcaption{font-size:12px;margin-top:8px}
+.tour-rooms{grid-template-columns:1fr;gap:12px;margin-top:20px}
+.tour-rooms .entry{grid-template-columns:120px 1fr}
+.tour-rooms .entry-top{aspect-ratio:auto;min-height:0;height:100%}
+.room-no{left:8px;top:8px;width:26px;height:26px;font-size:13px}
+.tour-rooms .entry h3{font-size:20px}
+.tour-rooms .entry p{font-size:14px}
+.tour-rooms .entry p br{display:none}
+.room-figure img{aspect-ratio:16/10}
+.page-banner figcaption,.room-figure figcaption{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.tour-pin i::after{animation:none;opacity:.4}
+.tour-enter:hover,.tour-rooms .entry.is-hot{transform:none}}
+@media print{.tour-enter,.tour-hint{display:none!important}}
