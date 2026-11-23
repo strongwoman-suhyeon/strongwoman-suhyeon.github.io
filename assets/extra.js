@@ -180,12 +180,35 @@
     const more = $('#' + key + '-archive-more');
     const PAGE = 9;
     let shown = PAGE;
+    // 북인사이트 메뉴: [전체] [재독여행] [북인사이트] 거르기 버튼 (2026-11-24 대표님 승인)
+    let kind = '전체';
+    if (key === 'library' && count && !$('#library-archive-chips')) {
+      const KINDS = ['전체', '재독여행', '북인사이트'];
+      const num = (k) => (k === '전체' ? posts.length : posts.filter((p) => cat(p).name === k).length);
+      const box = document.createElement('div');
+      box.className = 'chips';
+      box.id = 'library-archive-chips';
+      box.setAttribute('aria-label', '북인사이트 글 종류');
+      box.style.margin = '4px 0 14px';
+      box.innerHTML = KINDS.map((k) => '<button type="button" class="chip" data-kind="' + k + '" aria-pressed="' + (k === '전체') + '">' + k +
+        ' <span style="opacity:.6;font-weight:400">' + num(k) + '</span></button>').join('');
+      count.parentNode.insertBefore(box, count);
+      box.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-kind]');
+        if (!b) return;
+        kind = b.dataset.kind;
+        box.querySelectorAll('[data-kind]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        shown = PAGE;
+        draw();
+      });
+    }
     function draw() {
       const q = (input?.value || '').trim().toLocaleLowerCase('ko');
-      const items = posts.filter((p) => (p.title + ' ' + p.summary).toLocaleLowerCase('ko').includes(q));
-      count.textContent = '블로그 글 ' + items.length + '편' + (q ? ' · “' + q + '” 검색 결과' : '');
+      const items = posts.filter((p) => (kind === '전체' || cat(p).name === kind) &&
+        (p.title + ' ' + p.summary).toLocaleLowerCase('ko').includes(q));
+      if (count) count.textContent = '블로그 글 ' + items.length + '편' + (kind !== '전체' ? ' · ' + kind : '') + (q ? ' · “' + q + '” 검색 결과' : '');
       list.innerHTML = items.length ? items.slice(0, shown).map(postCard).join('') : '<li class="archive-empty">' + emptyWord + '</li>';
-      more.hidden = items.length <= shown;
+      if (more) more.hidden = items.length <= shown;
     }
     input?.addEventListener('input', () => { shown = PAGE; draw(); });
     more?.addEventListener('click', () => { shown += PAGE; draw(); });
