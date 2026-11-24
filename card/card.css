@@ -9,3 +9,5 @@
 .web-links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .web-links>a{justify-content:center;gap:6px;width:auto;border:1px solid #e3dccf;border-radius:8px;background:rgba(255,255,255,.6);padding:10px 8px;text-align:center;line-height:1.35}
 .web-links>a span{flex:none}
+.web-links>a{white-space:nowrap;letter-spacing:-.03em;padding:10px 6px}
+@media(max-width:360px){.web-links>a{font-size:12px}}
