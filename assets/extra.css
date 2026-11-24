@@ -120,3 +120,8 @@ a.today-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(
 #main:focus{outline:none}
 .t-book .book-line{font:500 22px/1.65 var(--serif);letter-spacing:-.035em;color:#3a2d52}
 .t-book .book-src{font-size:15px;color:#6a4894;font-weight:600}
+
+/* 메뉴 7개가 한 줄에 들어가도록 중간 폭에서 간격 조정 */
+@media(max-width:1300px){.nav{gap:18px}.navlink{font-size:16px;letter-spacing:-.02em}.nav-cta{padding:9px 14px;font-size:15px}}
+@media(max-width:1120px){.nav{gap:13px}.navlink{font-size:15px;letter-spacing:-.04em}.brand small{letter-spacing:.08em}}
+@media(max-width:880px){.nav{gap:10px}.navlink{font-size:14px;letter-spacing:-.05em}.brand b{font-size:18px}.brand small{font-size:12px;letter-spacing:.02em}}
