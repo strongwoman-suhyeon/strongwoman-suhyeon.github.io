@@ -46,3 +46,22 @@ link.append(full,compact);link.setAttribute('aria-label',chip.textContent+' · '
 const zone=document.createElement('a');zone.className='scene-zone zone-'+key;zone.href=href;zone.tabIndex=-1;zone.setAttribute('aria-hidden','true');zone.title=label;frame.prepend(zone);
 });
 })();
+
+/* 공간 이름표를 명확한 바로가기 버튼으로 표시 */
+(()=>{
+const frame=document.querySelector('.scene-frame');if(!frame||frame.dataset.buttons==='true')return;frame.dataset.buttons='true';
+const style=document.createElement('style');style.textContent=`
+.scene-click-hint{margin:0 0 12px;text-align:center;font-size:14px;line-height:1.6;color:#425b48;font-weight:600}
+.scene-click-hint strong{font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.scene-frame .chip-care{--scene-accent:#365c9d}.scene-frame .chip-book{--scene-accent:#7551a0}.scene-frame .chip-cafe{--scene-accent:#b85447}
+.scene-frame a.scene-chip{flex-direction:column;justify-content:center;gap:7px;padding:10px 17px;min-height:72px;background:#fff;border:2px solid var(--scene-accent);border-radius:18px;color:var(--scene-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--scene-accent) 40%,transparent),0 8px 20px #25362b24;transition:box-shadow .18s,background .18s}
+.scene-frame a.scene-chip::before,.scene-frame a.scene-chip::after{display:none}
+.scene-frame a.scene-chip .scene-long,.scene-frame a.scene-chip .scene-short{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;font-weight:800}
+.scene-frame .scene-cta{display:inline-flex;align-items:center;gap:7px;padding:3px 11px;border-radius:20px;background:var(--scene-accent);color:#fff;font-size:12px;line-height:1.5;font-weight:700;letter-spacing:0;white-space:nowrap;text-decoration:none}
+.scene-frame a.scene-chip:hover,.scene-frame:has(.zone-care:hover) .chip-care,.scene-frame:has(.zone-book:hover) .chip-book,.scene-frame:has(.zone-cafe:hover) .chip-cafe{background:color-mix(in srgb,var(--scene-accent) 6%,white);box-shadow:0 5px 0 color-mix(in srgb,var(--scene-accent) 55%,transparent),0 10px 24px #25362b36}
+.scene-frame a.scene-chip:active{box-shadow:0 1px 0 var(--scene-accent),0 2px 8px #25362b24;background:color-mix(in srgb,var(--scene-accent) 12%,white)}
+@media(max-width:720px){.scene-click-hint{font-size:12px;margin-bottom:9px}.scene-frame a.scene-chip{font-size:12px;padding:7px 9px;gap:5px;min-height:62px;border-radius:13px}.scene-frame .scene-cta{font-size:10px;padding:2px 9px}.scene-frame .chip-book{top:3%}.scene-frame .chip-care{top:41%;left:2%}.scene-frame .chip-cafe{top:44%;right:2%}}
+`;document.head.append(style);
+frame.querySelectorAll('a.scene-chip').forEach(link=>{const cta=document.createElement('span');cta.className='scene-cta';cta.textContent='바로가기 →';cta.setAttribute('aria-hidden','true');link.append(cta)});
+const hint=document.createElement('p');hint.className='scene-click-hint';hint.append('궁금한 공간의 ');const strong=document.createElement('strong');strong.textContent='이름표를 눌러보세요';hint.append(strong,'.');frame.before(hint);
+})();
