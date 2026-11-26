@@ -100,14 +100,14 @@ const faq = [
   ['건강테크는 의료 상담인가요?', '아닙니다. 일반적인 생활 실천 정보를 나누는 콘텐츠입니다. 질환의 진단이나 치료, 약 복용의 변경은 담당 의료진과 상의해야 합니다.'],
 ];
 pages['care'] = layout({
-  path: '/care/', crumbs: '보험 보장분석 상담',
-  title: '광주 보험 보장분석 상담 · 1:1 맞춤설계 | 스트롱우먼 박수현',
-  desc: '광주 라이프플래너 박수현의 보험 보장분석 상담. 가입한 보험의 보장 내용, 갱신, 겹치는 보장과 빈 곳을 쉬운 말로 점검하고 생활에 맞게 정리합니다.',
+  path: '/care/', crumbs: '보험 보장분석·맞춤설계 상담',
+  title: '보험 보장분석·맞춤설계 상담 · 전국 비대면 가능 | 스트롱우먼 박수현',
+  desc: '보험 보장분석과 1:1 맞춤설계 상담. 가입한 보험의 보장 내용, 갱신, 겹치는 보장과 빈 곳을 쉬운 말로 점검하고 생활에 맞게 정리합니다. 전국 비대면 상담도 가능합니다.',
   eyebrow: '삶을 지키는 보장',
-  h1: '내 보험을 이해하는 것부터,<br>광주 보험 보장분석 상담',
+  h1: '내 보험을 이해하는 것부터,<br>보험 보장분석·맞춤설계 상담',
   lead: '얼마나 많이 가입했는지보다, 지금 내 삶에 어떤 보장이 필요한지 함께 살펴봅니다. 계약 변경을 결정하기 전, 가지고 있는 보장을 먼저 이해해보세요.',
   jsonld: [
-    { '@type': 'ProfessionalService', '@id': SITE + '/#service', name: '스트롱우먼 박수현 보험 보장분석 상담', url: SITE + '/care/', telephone: '+82-10-2000-0220', areaServed: { '@type': 'AdministrativeArea', name: '광주광역시' }, address: { '@type': 'PostalAddress', addressLocality: '광주광역시', addressCountry: 'KR' } },
+    { '@type': 'ProfessionalService', '@id': SITE + '/#service', name: '스트롱우먼 박수현 보험 보장분석·맞춤설계 상담', url: SITE + '/care/', telephone: '+82-10-2000-0220', areaServed: [{ '@type': 'Country', name: '대한민국' }, { '@type': 'AdministrativeArea', name: '광주광역시' }], address: { '@type': 'PostalAddress', addressLocality: '광주광역시', addressCountry: 'KR' } },
     { '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
   ],
   body: `<section class="sec"><div class="wrap">
@@ -117,6 +117,7 @@ pages['care'] = layout({
 <li><b>현재 보장 이해하기</b><span>가입 내용과 보장 기간, 갱신 여부, 지급 조건을 쉬운 말로 살펴봅니다.</span></li>
 <li><b>선택의 이유 설명하기</b><span>유지하거나 점검할 부분을 구분하고, 결정 전에 확인할 사항을 정리합니다.</span></li>
 </ol>
+<p>광주 지역은 물론 <b>전국 어디서나 비대면으로 상담</b>받으실 수 있습니다. 상담 방법과 일정은 <a href="/card/"><u>전자명함</u></a>에서 문의해 주세요.</p>
 <p class="muted">상담 범위와 자료 전달 방법은 문의 후 개별 확인이 필요합니다. 특정 상품 가입이나 보험금 지급을 보장하지 않습니다.</p>
 </div></section>
 <section class="sec alt"><div class="wrap">
