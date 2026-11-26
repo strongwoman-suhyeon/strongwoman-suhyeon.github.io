@@ -50,6 +50,15 @@ button,input,textarea,select{font:inherit;color:inherit}
 #msg{min-height:24px;margin-top:14px;font-size:15px;color:var(--terra)}
 #msg.ok{color:var(--green-d)}
 .lk .back{display:inline-block;margin-top:16px;font-size:14px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
+.lk .gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:58px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font-weight:700;font-size:18px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.lk .gbtn:hover{background:#fff;border-color:#C9BFA8;box-shadow:0 6px 16px rgba(60,50,30,.10)}
+.lk .gbtn svg{width:22px;height:22px;flex:none}
+.lk .gsub{margin:10px 0 0;font-size:13.5px;color:var(--sub)}
+.lk .or{display:flex;align-items:center;gap:12px;margin:26px 0 18px;color:var(--sub);font-size:13.5px}
+.lk .or::before,.lk .or::after{content:"";flex:1;height:1px;background:var(--line)}
+.lk .pwbox[hidden]{display:none}
+.lk .pwtoggle{background:none;border:0;height:auto;width:auto;color:var(--sub);font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px}
+.lk .pwtoggle:hover{background:none;color:var(--ink)}
 @media (max-width:480px){.lk{padding:32px 20px 24px}}
 </style>
 </head>
@@ -59,11 +68,17 @@ button,input,textarea,select{font:inherit;color:inherit}
     <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M26 5C14 5 6 11 6 20c0 2 .5 3.6 1.3 5C9 17 14 12.5 21 10c-5.5 3.6-9.6 8.6-11.6 16.4 1.5 1 3.4 1.6 5.6 1.6 8 0 12-8 11-23Z" fill="#F7F2E6"/></svg></div>
     <h1>관리자 화면</h1>
     <p>스트롱우먼 박수현 대표님만 들어오는 곳이에요.</p>
+    <button type="button" class="gbtn" id="gbtn"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.9 6.2C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.2C1 16.6 0 20.2 0 24s1 7.4 2.7 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.2C6.6 42.6 14.6 48 24 48z"/></svg>구글 계정으로 들어가기</button>
+    <p class="gsub">tnpf007822 · 94sksg2114 계정만 들어올 수 있어요.</p>
+    <div class="or">또는</div>
+    <button type="button" class="pwtoggle" id="pwToggle">비밀번호로 들어가기</button>
+    <div class="pwbox" id="pwBox" hidden>
     <input type="text" name="username" value="관리자" autocomplete="username" hidden>
     <label class="f" for="pw">비밀번호</label>
     <input type="password" id="pw" name="password" autocomplete="current-password" placeholder="비밀번호를 적어 주세요" required>
     <label class="rem"><input type="checkbox" id="rem"><span><b>이 기기에서 계속 열어 두기</b>내 PC, 내 휴대폰에서만 켜 주세요.</span></label>
     <button type="submit" id="go">들어가기</button>
+    </div>
     <div id="msg" role="status"></div>
     <a class="back" href="/">← 홈페이지로 돌아가기</a>
   </form>
@@ -89,6 +104,59 @@ button,input,textarea,select{font:inherit;color:inherit}
     const kek = await crypto.subtle.deriveKey({name:'PBKDF2', hash:'SHA-256', salt:b64d(keys.salt), iterations:keys.iter}, base, {name:'AES-GCM', length:256}, false, ['decrypt']);
     return new Uint8Array(await dec(kek, b64d(keys.wrap).buffer));
   }
+  /* 구글 계정으로 들어가기 (2026-11-27): 열쇠는 대표님 구글 드라이브의 앱 전용 숨김 공간(appDataFolder)에만 있어요 */
+  const GCID = '223376583460-eaos27uiuvbp89ld9olnfiik4b0j8pa7.apps.googleusercontent.com';
+  const ALLOW = ['tnpf007822@gmail.com', '94sksg2114@gmail.com'];
+  const KEYNAME = 'sw_admin_key_v1';
+  let gToken = null, tokenClient = null, pendingG = null;
+  function gisReady(){ return !!(window.google && google.accounts && google.accounts.oauth2); }
+  (function loadGis(){ const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.onload = initGis; document.head.appendChild(s); })();
+  function initGis(){
+    if(!gisReady()) return;
+    tokenClient = google.accounts.oauth2.initTokenClient({ client_id: GCID,
+      scope: 'openid email https://www.googleapis.com/auth/drive.appdata',
+      callback: r => { if(r && r.access_token){ pendingG && pendingG.res(r.access_token); } else { pendingG && pendingG.rej(new Error((r && r.error) || 'denied')); } pendingG = null; },
+      error_callback: e => { pendingG && pendingG.rej(new Error((e && e.type) || 'popup')); pendingG = null; } });
+  }
+  function askToken(){ return new Promise((res, rej) => { if(!tokenClient){ initGis(); } if(!tokenClient) return rej(new Error('gis')); pendingG = { res, rej }; tokenClient.requestAccessToken({ prompt: '' }); }); }
+  const gfetch = (u, o) => fetch(u, Object.assign({}, o, { headers: Object.assign({ Authorization: 'Bearer ' + gToken }, (o && o.headers) || {}) }));
+  async function gFindKey(){
+    const q = encodeURIComponent("name='" + KEYNAME + "'");
+    const r = await gfetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&fields=files(id)&q=' + q);
+    if(!r.ok) throw new Error('drive ' + r.status);
+    const j = await r.json(); if(!j.files || !j.files.length) return null;
+    const f = await gfetch('https://www.googleapis.com/drive/v3/files/' + j.files[0].id + '?alt=media');
+    if(!f.ok) throw new Error('drive ' + f.status);
+    return (await f.text()).trim();
+  }
+  async function gSaveKey(raw){
+    const b = 'swk' + Date.now();
+    const body = '--' + b + '\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n' + JSON.stringify({ name: KEYNAME, parents: ['appDataFolder'] }) +
+      '\r\n--' + b + '\r\nContent-Type: text/plain\r\n\r\n' + b64e(raw) + '\r\n--' + b + '--';
+    const r = await gfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', { method: 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + b }, body });
+    if(!r.ok) throw new Error('save ' + r.status);
+  }
+  function showPw(){ $('#pwBox').hidden = false; $('#pwToggle').hidden = true; $('#pw').focus(); }
+  $('#pwToggle').addEventListener('click', showPw);
+  $('#gbtn').addEventListener('click', async () => {
+    const g = $('#gbtn'); g.disabled = true; msg('구글 계정을 확인하고 있어요…', true);
+    try{
+      gToken = await askToken();
+      const u = await (await gfetch('https://www.googleapis.com/oauth2/v3/userinfo')).json();
+      const email = String(u.email || '').toLowerCase();
+      if(!ALLOW.includes(email)){ gToken = null; g.disabled = false; msg('이 구글 계정(' + email + ')은 등록되지 않았어요. 대표님 계정으로 다시 눌러 주세요.'); return; }
+      msg('열쇠를 찾고 있어요…', true);
+      const k = await gFindKey();
+      if(k){ await start(b64d(k), $('#rem').checked); return; }
+      g.disabled = false; showPw();
+      msg('처음 한 번만 비밀번호를 넣어 주세요. 다음부터는 구글 계정만 누르면 열려요.', true);
+    }catch(err){
+      g.disabled = false;
+      const t = String(err && err.message || '');
+      msg(/popup|closed|denied|access_denied/.test(t) ? '구글 창이 닫혔어요. 다시 눌러 주세요.' : /gis/.test(t) ? '구글 연결을 준비하고 있어요. 잠시 뒤 다시 눌러 주세요.' : '구글 계정 확인 중 문제가 생겼어요. 다시 누르거나 비밀번호로 들어와 주세요.');
+    }
+  });
+
   function lock(){ try{ sessionStorage.removeItem(LS); localStorage.removeItem(LS); }catch(e){} location.replace(location.pathname); }
   async function start(raw, remember){
     await loadKeys();
@@ -110,6 +178,7 @@ button,input,textarea,select{font:inherit;color:inherit}
       let raw;
       try{ raw = await rawFromPassword(normalize($('#pw').value)); }
       catch(err){ raw = await rawFromPassword($('#pw').value); }
+      if(gToken){ try{ msg('구글 계정에 열쇠를 저장하고 있어요…', true); await gSaveKey(raw); }catch(e){} }
       await start(raw, $('#rem').checked);
     }catch(err){
       btn.disabled = false;
@@ -126,11 +195,11 @@ button,input,textarea,select{font:inherit;color:inherit}
       if(m){ saved = fromUrl(m[1]); remember = true; history.replaceState(null, '', location.pathname); }
       else saved = sessionStorage.getItem(LS) || localStorage.getItem(LS);
     }catch(e){}
-    if(!saved){ $('#pw').focus(); return; }
+    if(!saved){ $('#gbtn').focus(); return; }
     $('#go').disabled = true; msg('여는 중이에요…', true);
     try{ await start(b64d(saved), remember); }
     catch(e){ try{ sessionStorage.removeItem(LS); localStorage.removeItem(LS); }catch(_){}
-      if($('#go')){ $('#go').disabled = false; msg(m ? '링크가 더 이상 맞지 않아요. 비밀번호로 들어와 주세요.' : ''); $('#pw').focus(); } }
+      if($('#go')){ $('#go').disabled = false; msg(m ? '링크가 더 이상 맞지 않아요. 구글 계정이나 비밀번호로 들어와 주세요.' : ''); $('#gbtn').focus(); } }
   })();
 })();
 </script>
