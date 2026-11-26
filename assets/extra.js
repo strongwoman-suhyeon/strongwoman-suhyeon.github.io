@@ -259,3 +259,24 @@
   });
   fetch('data/qna.json' + bust).then((r) => r.json()).then(renderQna).catch(() => renderQna({ items: [] }));
 })();
+
+/* 상단 작은 관리자 메뉴 (2026-11-27 대표님 요청: 나만 들어가는 제작물 게시판) */
+(() => {
+  const row = document.querySelector('.header .navrow');
+  if (!row || row.querySelector('.admin-mini')) return;
+  const st = document.createElement('style');
+  st.textContent = '.admin-mini{display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:4px 9px;border-radius:999px;border:1px solid rgba(48,76,135,.18);color:#7a7f8c;font-size:12px;font-weight:600;line-height:1;text-decoration:none;opacity:.7;white-space:nowrap}'
+    + '.admin-mini:hover,.admin-mini:focus-visible{opacity:1;color:#304c87;border-color:rgba(48,76,135,.45)}'
+    + '.admin-mini svg{width:12px;height:12px}'
+    + '@media (max-width:980px){.admin-mini{order:2;margin-left:auto;margin-right:6px}.admin-mini span{display:none}}';
+  document.head.appendChild(st);
+  const a = document.createElement('a');
+  a.className = 'admin-mini';
+  a.href = '/admin/#works';
+  a.title = '나만 보는 제작물 게시판 (비밀번호 필요)';
+  a.setAttribute('aria-label', '관리자 제작물 게시판');
+  a.rel = 'nofollow';
+  a.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>관리</span>';
+  const cta = row.querySelector('.nav-cta');
+  if (cta) cta.after(a); else row.appendChild(a);
+})();
