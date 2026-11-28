@@ -18,7 +18,7 @@ const today = ymd(new Date().toISOString());
 
 const byCat = (...cats) => posts.filter((p) => cats.includes(clean(p.category)));
 const health = byCat('건강테크');
-const books = byCat('2026_50일 재독여행', '생각창고·독서');
+const books = byCat('2026_50일 재독여행', '생각창고·독서', '북인사이트', '책으로 생각 잇기');
 const essays = byCat('스트롱우먼_생각에세이', '박수현 소개', '프롤로그');
 
 const NAV = [
