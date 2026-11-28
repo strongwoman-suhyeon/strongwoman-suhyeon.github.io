@@ -42,7 +42,7 @@
   const CATS = {
     '건강테크': { name: '건강테크', cls: 'cat-health' },
     '2026_50일 재독여행': { name: '재독여행', cls: 'cat-book' },
-    '생각창고·독서': { name: '북인사이트', cls: 'cat-book' },
+    '생각창고·독서': { name: '책으로 생각 잇기', cls: 'cat-book' }, // 상위 카테고리에 남은 예전 독서 글 (2026-11-28 정리)
     '북인사이트': { name: '북인사이트', cls: 'cat-book' },
     '책으로 생각 잇기': { name: '책으로 생각 잇기', cls: 'cat-book' },
     '스트롱우먼_생각에세이': { name: '생각에세이', cls: 'cat-essay' }
