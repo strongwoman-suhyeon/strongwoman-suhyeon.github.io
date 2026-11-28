@@ -53,7 +53,7 @@ function layout({ path, title, desc, h1, eyebrow, lead, body, jsonld = [], crumb
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 <header class="top"><div class="wrap toprow">
-<a class="brand" href="/" aria-label="스트롱우먼 박수현 홈페이지로"><b>스트롱우먼 박수현</b><small>삶을 지키는 온라인 생각창고</small></a>
+<a class="brand" href="/" aria-label="스트롱우먼 박수현 홈페이지로"><b>스트롱우먼 박수현</b><small>삶을 지키는 생각창고</small></a>
 <nav class="nav" aria-label="주요 메뉴">${NAV.map(([h, t]) => `<a href="${h}"${h === path ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
 </div></header>
 <main id="main">
