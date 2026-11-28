@@ -43,11 +43,13 @@
     '건강테크': { name: '건강테크', cls: 'cat-health' },
     '2026_50일 재독여행': { name: '재독여행', cls: 'cat-book' },
     '생각창고·독서': { name: '북인사이트', cls: 'cat-book' },
+    '북인사이트': { name: '북인사이트', cls: 'cat-book' },
+    '책으로 생각 잇기': { name: '책으로 생각 잇기', cls: 'cat-book' },
     '스트롱우먼_생각에세이': { name: '생각에세이', cls: 'cat-essay' }
   };
   const cat = (p) => CATS[p.category] || { name: '박수현 이야기', cls: 'cat-etc' };
   const isHealth = (p) => p.category === '건강테크';
-  const isBook = (p) => p.category === '2026_50일 재독여행' || p.category === '생각창고·독서';
+  const isBook = (p) => ['2026_50일 재독여행', '생각창고·독서', '북인사이트', '책으로 생각 잇기'].includes(p.category);
   const isFresh = (p) => isHealth(p) || isBook(p) || p.category === '스트롱우먼_생각에세이';
 
   // 한국 시간 기준 날짜
@@ -183,7 +185,7 @@
     // 북인사이트 메뉴: [전체] [재독여행] [북인사이트] 거르기 버튼 (2026-11-24 대표님 승인)
     let kind = '전체';
     if (key === 'library' && count && !$('#library-archive-chips')) {
-      const KINDS = ['전체', '재독여행', '북인사이트'];
+      const KINDS = ['전체', '재독여행', '북인사이트', '책으로 생각 잇기'];
       const num = (k) => (k === '전체' ? posts.length : posts.filter((p) => cat(p).name === k).length);
       const box = document.createElement('div');
       box.className = 'chips';
